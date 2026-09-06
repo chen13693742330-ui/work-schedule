@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: work-schedule
+    env: node
+    region: singapore
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/tasks
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
