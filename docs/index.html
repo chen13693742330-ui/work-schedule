@@ -510,15 +510,16 @@ function connectFirebase() {
   const input = document.getElementById('firebase-config-input').value.trim();
   try {
     let config;
-    const match = input.match(/\{[\s\S]*\}/);
+    const match = input.match(/const\s+firebaseConfig\s*=\s*(\{[\s\S]*?\})\s*;?/);
     if (match) {
-      config = JSON.parse(match[0]
-        .replace(/(\w+):/g, '"$1":')
-        .replace(/'/g, '"')
-        .replace(/,\s*}/, '}')
-      );
+      config = new Function('return ' + match[1])();
     } else {
-      throw new Error('No config object found');
+      const match2 = input.match(/\{[\s\S]*?\}/);
+      if (match2) {
+        config = new Function('return ' + match2[0])();
+      } else {
+        throw new Error('No config object found');
+      }
     }
 
     // Update the config and reload
