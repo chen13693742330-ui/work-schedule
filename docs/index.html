@@ -494,9 +494,10 @@ function initApp() {
     setupRealtimeListeners();
     setupPresence();
 
-    const savedName = sessionStorage.getItem('username');
+    const savedName = localStorage.getItem('username');
     if (savedName) {
       myName = savedName;
+      if (myPresenceRef) myPresenceRef.update({ name: myName });
     } else {
       showNameModal();
     }
@@ -541,7 +542,7 @@ function connectFirebase() {
     setupRealtimeListeners();
     setupPresence();
 
-    const savedName = sessionStorage.getItem('username');
+    const savedName = localStorage.getItem('username');
     if (savedName) { myName = savedName; }
     else { showNameModal(); }
 
@@ -924,7 +925,7 @@ function saveName() {
   const name = document.getElementById('user-name-input').value.trim();
   if (!name) { showToast('⚠️ 请输入名字'); return; }
   myName = name;
-  sessionStorage.setItem('username', name);
+  localStorage.setItem('username', name);
   if (myPresenceRef) {
     myPresenceRef.update({ name: name, online: true });
   }
