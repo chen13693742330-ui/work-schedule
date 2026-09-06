@@ -864,13 +864,23 @@ function importData(event) {
       if (confirm(`发现 ${importedTasks.length} 个任务，是否导入？（将合并到现有任务中，所有协作者可见）`)) {
         importedTasks.forEach(t => {
           const newRef = tasksRef.push();
+          // 兼容旧格式：pending→todo, 0/1/2/3→high/medium/low, note→desc
+          let status = t.status || 'todo';
+          if (status === 'pending') status = 'todo';
+          if (status === 'completed') status = 'done';
+          let priority = t.priority || 'medium';
+          if (typeof priority === 'number') {
+            priority = priority === 0 ? 'high' : priority === 1 ? 'medium' : 'low';
+          }
+          if (!['high','medium','low'].includes(priority)) priority = 'medium';
           newRef.set({
             title: t.title || '未命名任务',
-            desc: t.desc || '',
+            desc: t.desc || t.note || '',
             date: t.date || '',
-            status: t.status || 'todo',
-            priority: t.priority || 'medium',
+            status: status,
+            priority: priority,
             createdAt: t.createdAt || new Date().toISOString(),
+            completedAt: t.completedAt || null,
             createdBy: t.createdBy || myName || '导入'
           });
         });
