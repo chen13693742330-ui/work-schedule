@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Railway 部署指南</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: #f8f9fa;
+    color: #1a1a2e;
+    line-height: 1.6;
+    padding: 40px 20px;
+  }
+  .container { max-width: 800px; margin: 0 auto; }
+  .card {
+    background: white;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    margin-bottom: 24px;
+  }
+  h1 { font-size: 28px; margin-bottom: 8px; }
+  h2 { font-size: 20px; margin-bottom: 12px; color: #4f6ef7; }
+  .subtitle { color: #6b7280; margin-bottom: 24px; font-size: 15px; }
+  .step {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding: 16px;
+    border-radius: 12px;
+    background: #f8f9fa;
+  }
+  .step:hover { background: #eef1ff; }
+  .step-num {
+    width: 32px; height: 32px;
+    min-width: 32px;
+    background: #4f6ef7;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .step-content { flex: 1; }
+  .step-content h3 { font-size: 15px; margin-bottom: 4px; }
+  .step-content p { font-size: 14px; color: #4b5563; }
+  .step-content a {
+    color: #4f6ef7;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .step-content a:hover { text-decoration: underline; }
+  .code-box {
+    background: #1a1a2e;
+    color: #a5d6ff;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-family: 'SF Mono', Menlo, monospace;
+    font-size: 13px;
+    margin: 8px 0;
+    overflow-x: auto;
+    position: relative;
+  }
+  .copy-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(255,255,255,0.1);
+    border: none;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+  }
+  .copy-btn:hover { background: rgba(255,255,255,0.2); }
+  .alert {
+    background: #fef3c7;
+    border: 1px solid #fcd34d;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 14px;
+    margin: 12px 0;
+    color: #92400e;
+  }
+  .alert-blue {
+    background: #dbeafe;
+    border: 1px solid #93c5fd;
+    color: #1e40af;
+  }
+  .alert-green {
+    background: #d1fae5;
+    border: 1px solid #6ee7b7;
+    color: #065f46;
+  }
+  .btn-link {
+    display: inline-block;
+    background: #4f6ef7;
+    color: white !important;
+    padding: 12px 28px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    margin: 8px 0;
+  }
+  .btn-link:hover { background: #3b56d4; }
+  .divider {
+    height: 1px;
+    background: #e5e7eb;
+    margin: 32px 0;
+  }
+  .badge {
+    display: inline-block;
+    background: #4f6ef7;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .tag {
+    display: inline-block;
+    background: #eef1ff;
+    color: #4f6ef7;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-left: 4px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="card">
+    <span class="badge">方案 A · 推荐</span>
+    <h1>Railway 部署指南</h1>
+    <p class="subtitle">两种方式任选其一，5 分钟搞定多人协作工作安排系统</p>
+
+    <h2>方式一：Railway CLI 部署（自动）</h2>
+    <p style="margin-bottom:16px;">如果你能从 Railway 网站获取一个 API Token，我可以直接用命令行帮你一键部署。</p>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h3>注册/登录 Railway</h3>
+        <p>打开 <a href="https://railway.com" target="_blank">railway.com</a>，用 GitHub 或邮箱注册（免费）</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h3>生成 API Token</h3>
+        <p>登录后访问 <a href="https://railway.com/account/tokens" target="_blank">railway.com/account/tokens</a></p>
+        <p>点击 <strong>"Create Token"</strong>，名字填 <code>deploy</code>，复制生成的 Token</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h3>把 Token 发给我</h3>
+        <p>在对话中粘贴你的 Token，格式如：</p>
+        <div class="code-box">
+          0a1b2c3d-4e5f-6789-abcd-ef0123456789
+        </div>
+        <p>我收到后立刻帮你创建项目并部署。</p>
+      </div>
+    </div>
+
+    <div class="alert alert-blue">
+      💡 Token 只用于本次部署，不会存储。你也可以在部署完成后在 Railway 网站上撤销该 Token。
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="badge">方案 B · 手动</span>
+    <h2>方式二：Railway 网站手动部署</h2>
+    <p class="subtitle">不需要 Token，全程在浏览器中操作</p>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h3>创建 GitHub 仓库</h3>
+        <p>打开 <a href="https://github.com/new" target="_blank">github.com/new</a>，创建一个名为 <code>work-schedule</code> 的仓库</p>
+        <p>设为 Public 或 Private 均可</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h3>上传项目文件</h3>
+        <p>在你的 GitHub 仓库中，点击 <strong>"uploading an existing file"</strong></p>
+        <p>把以下文件从 <code>server/</code> 目录拖拽上传：</p>
+        <p style="margin-top:8px;">
+          <span class="tag">package.json</span>
+          <span class="tag">server.js</span>
+          <span class="tag">railway.json</span>
+          <span class="tag">public/index.html</span>
+          <span class="tag">.gitignore</span>
+        </p>
+        <div class="alert">
+          ⚠️ 注意：需要先在仓库中创建 <code>public</code> 文件夹，再把 <code>index.html</code> 上传到 <code>public/</code> 目录下。GitHub 网页上传时，文件路径会保持文件夹结构。
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h3>在 Railway 创建项目</h3>
+        <p>打开 <a href="https://railway.com/new" target="_blank">railway.com/new</a></p>
+        <p>选择 <strong>"Deploy from GitHub repo"</strong></p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h3>连接 GitHub 仓库</h3>
+        <p>授权 Railway 访问你的 GitHub，选择刚才创建的 <code>work-schedule</code> 仓库</p>
+        <p>Railway 会自动检测到 <code>railway.json</code> 配置，自动安装依赖并部署</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        <h3>获取公网地址</h3>
+        <p>部署完成后，在 Railway 项目页面点击 <strong>"Settings"</strong> → <strong>"Networking"</strong> → <strong>"Generate Domain"</strong></p>
+        <p>你会获得一个类似 <code>work-schedule-production.up.railway.app</code> 的公网地址</p>
+      </div>
+    </div>
+
+    <div class="alert alert-green">
+      ✅ 完成！把这个公网地址分享给团队，大家就能实时协作了
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>需要上传的文件清单</h2>
+    <p style="margin-bottom:16px;">位于项目目录 <code>server/</code> 下：</p>
+    <div class="code-box">
+server/
+├── package.json          <span style="color:#6b7280"># 依赖配置</span>
+├── server.js             <span style="color:#6b7280"># 后端服务</span>
+├── railway.json          <span style="color:#6b7280"># Railway 部署配置</span>
+├── .gitignore
+└── public/
+    └── index.html        <span style="color:#6b7280"># 前端页面</span>
+    </div>
+    <p style="margin-top:12px;font-size:14px;color:#6b7280;">不需要上传 <code>node_modules/</code> 和 <code>tasks.json</code>，Railway 会自动安装依赖，数据文件运行后自动生成。</p>
+  </div>
+
+  <div class="card" style="text-align:center;">
+    <h2>需要帮助？</h2>
+    <p style="margin-bottom:16px;">如果你有 Railway API Token，直接在对话中粘贴给我<br>我会立刻帮你自动部署，不需要手动操作。</p>
+    <a href="https://railway.com/account/tokens" target="_blank" class="btn-link">获取 Railway API Token →</a>
+  </div>
+</div>
+
+<script>
+  // Copy button functionality
+  document.querySelectorAll('.code-box').forEach(box => {
+    const btn = document.createElement('button');
+    btn.className = 'copy-btn';
+    btn.textContent = '复制';
+    btn.onclick = () => {
+      navigator.clipboard.writeText(box.textContent.replace('复制','').trim());
+      btn.textContent = '已复制!';
+      setTimeout(() => btn.textContent = '复制', 2000);
+    };
+    box.appendChild(btn);
+  });
+</script>
+</body>
+</html>

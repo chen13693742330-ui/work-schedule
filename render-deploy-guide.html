@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Render 部署指南 - 工作安排</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f1117;color:#e4e4e7;line-height:1.7}
+.container{max-width:780px;margin:0 auto;padding:40px 20px}
+h1{font-size:28px;background:linear-gradient(135deg,#7c3aed,#2563eb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.subtitle{color:#a1a1aa;margin-bottom:32px;font-size:15px}
+.step{background:#1a1b26;border:1px solid #2a2b3a;border-radius:12px;padding:24px;margin-bottom:20px;position:relative}
+.step-num{position:absolute;top:-12px;left:20px;background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
+.step h3{margin:0 0 12px 36px;font-size:17px;color:#f4f4f5}
+.step p{color:#a1a1aa;font-size:14px;margin-bottom:10px}
+.code-block{background:#0d0e15;border:1px solid #2a2b3a;border-radius:8px;padding:14px;margin:10px 0;font-family:'SF Mono',Monaco,monospace;font-size:13px;color:#7dd3fc;overflow-x:auto;position:relative}
+.copy-btn{position:absolute;top:8px;right:8px;background:#2a2b3a;border:none;color:#a1a1aa;padding:4px 10px;border-radius:4px;font-size:12px;cursor:pointer;transition:all .2s}
+.copy-btn:hover{background:#3a3b4a;color:#fff}
+.highlight{background:rgba(124,58,237,.15);border-left:3px solid #7c3aed;padding:12px 16px;border-radius:0 8px 8px 0;margin:12px 0;color:#c4b5fd;font-size:14px}
+.note{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);border-radius:8px;padding:12px 16px;margin:12px 0;color:#86efac;font-size:14px}
+.warning{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);border-radius:8px;padding:12px 16px;margin:12px 0;color:#fcd34d;font-size:14px}
+.api-input{background:#0d0e15;border:1px solid #2a2b3a;border-radius:8px;padding:14px;margin:12px 0}
+.api-input label{display:block;color:#a1a1aa;font-size:13px;margin-bottom:8px}
+.api-input input{width:100%;background:#1a1b26;border:1px solid #2a2b3a;border-radius:6px;padding:10px 12px;color:#e4e4e7;font-size:14px;font-family:monospace}
+.api-input input:focus{outline:none;border-color:#7c3aed}
+.btn{display:inline-block;background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;padding:12px 28px;border-radius:8px;text-decoration:none;font-size:15px;font-weight:600;transition:all .2s;border:none;cursor:pointer}
+.btn:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(124,58,237,.3)}
+.links{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
+.links a{font-size:14px;color:#7dd3fc;text-decoration:none;border-bottom:1px dashed #2a2b3a;padding-bottom:2px}
+.links a:hover{color:#a78bfa}
+.divider{height:1px;background:#2a2b3a;margin:24px 0}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;margin-left:6px;vertical-align:middle}
+.tag-free{background:rgba(34,197,94,.15);color:#86efac;border:1px solid rgba(34,197,94,.3)}
+.summary{background:linear-gradient(135deg,rgba(124,58,237,.1),rgba(37,99,235,.1));border:1px solid #2a2b3a;border-radius:12px;padding:20px;margin:24px 0}
+.summary h3{color:#f4f4f5;font-size:16px;margin-bottom:12px}
+.summary ul{list-style:none;padding:0}
+.summary li{color:#a1a1aa;font-size:14px;padding:4px 0;padding-left:20px;position:relative}
+.summary li::before{content:'✓';position:absolute;left:0;color:#22c55e}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Render 部署指南</h1>
+<p class="subtitle">永久免费 · 无需信用卡 · 支持 WebSocket 实时协作</p>
+
+<div class="summary">
+<h3>部署概览</h3>
+<ul>
+<li>注册 Render 账号（GitHub 一键登录，30秒）</li>
+<li>获取 API Key（1分钟）</li>
+<li>把 API Key 发给 AI 助手，自动完成部署</li>
+<li>获得公网访问地址，分享给团队使用</li>
+</ul>
+</div>
+
+<div class="step">
+<span class="step-num">1</span>
+<h3>注册 Render 账号</h3>
+<p>打开 Render 官网，点击右上角 "Sign Up"，用 GitHub 或 Google 一键注册（免费，不需要信用卡）：</p>
+<div class="links">
+<a href="https://render.com" target="_blank">→ Render 官网注册</a>
+</div>
+</div>
+
+<div class="step">
+<span class="step-num">2</span>
+<h3>获取 API Key</h3>
+<p>登录后，进入 Account Settings → API Keys，点击 "Create API Key"：</p>
+<div class="links">
+<a href="https://dashboard.render.com/account/api-keys" target="_blank">→ 创建 API Key</a>
+</div>
+<p>复制生成的 API Key（格式类似 <code style="color:#7dd3fc">rnd_xxxxxxxxxxxx</code>），粘贴到对话中发给我就行。</p>
+<div class="note">
+💡 收到你的 API Key 后，我会自动完成以下所有操作：<br>
+1. 创建 Web Service<br>
+2. 配置环境变量<br>
+3. 触发首次部署<br>
+4. 获取公网访问地址<br>
+全程无需你手动操作任何其他步骤。
+</div>
+</div>
+
+<div class="step">
+<span class="step-num">3</span>
+<h3>等待自动部署完成</h3>
+<p>我会用 Render API 自动创建服务并部署代码，大约 2-3 分钟完成。部署完成后会给你一个类似这样的地址：</p>
+<div class="code-block">https://work-schedule-xxxx.onrender.com</div>
+<p>把这个地址分享给团队成员，大家打开就能实时协作了！</p>
+</div>
+
+<div class="divider"></div>
+
+<div class="warning">
+⚠️ <strong>关于免费版限制：</strong><br>
+• 免费版在 15 分钟无访问后会自动休眠，下次访问约需等待 30-50 秒唤醒<br>
+• 首次部署和每次唤醒后会有一点延迟，属正常现象<br>
+• 数据持久化在服务端文件系统，服务重启后数据保留；但免费版每 30 天会重置一次磁盘（如需永久存储，后续可加免费 PostgreSQL 数据库）
+</div>
+
+<div class="step">
+<span class="step-num">★</span>
+<h3>已准备好的部署文件</h3>
+<p>所有部署配置文件已就绪，无需你额外准备：</p>
+<div class="code-block">server/
+├── package.json      # Node.js 依赖
+├── server.js         # 后端服务代码
+├── render.yaml       # Render 部署配置
+├── Dockerfile        # Docker 部署配置（备用）
+├── .dockerignore     # Docker 忽略文件
+└── public/
+    └── index.html    # 前端页面</div>
+</div>
+
+<div class="divider"></div>
+
+<p style="text-align:center;color:#71717a;font-size:13px">
+现在只需要 → <a href="https://dashboard.render.com/account/api-keys" target="_blank" style="color:#7dd3fc;text-decoration:none">创建 Render API Key</a> → 粘贴给我 → 自动部署完成
+</p>
+</div>
+
+<script>
+document.querySelectorAll('.copy-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const text=btn.parentElement.textContent.replace(btn.textContent,'').trim();
+    navigator.clipboard.writeText(text);
+    btn.textContent='已复制';
+    setTimeout(()=>btn.textContent='复制',2000);
+  });
+});
+</script>
+</body>
+</html>
